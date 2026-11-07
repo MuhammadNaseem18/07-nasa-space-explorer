@@ -10,6 +10,7 @@ const modalTitle = document.getElementById('modalTitle');
 const modalDate = document.getElementById('modalDate');
 const modalExplanation = document.getElementById('modalExplanation');
 let spaceImages = [];
+const NASA_API_KEY = "PFHHqz89mJbmDbNbhNChjNFWf7BW7CcrzfFpm9LW" ;
 
 // Call the setupDateInputs function from dateRange.js
 // This sets up the date pickers to:
@@ -35,7 +36,7 @@ async function getSpaceImages() {
 		return;
 	}
 
-	const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=rpd8bcM6FLRKwHnqWRm6jqdKK8KdkFFQFjqdtw9P&start_date=${startDate}&end_date=${endDate}`;
+	const apiUrl = `https://science.nasa.gov/wp-json/wp/v2/apod-basic/?api_key=${NASA_API_KEY}&start_date=${startDate}&end_date=${endDate}`;
 
 	gallery.innerHTML = '<div class="placeholder"><p>Loading space images...</p></div>';
 	getImagesButton.disabled = true;
@@ -48,12 +49,12 @@ async function getSpaceImages() {
 		}
 
 		spaceImages = (await response.json()).filter((spaceImage) =>
-			spaceImage.media_type === 'image' && (spaceImage.hdurl || spaceImage.url)
-		);
+    spaceImage.media_type === 'image' && spaceImage.hdurl
+);
 
 		gallery.innerHTML = spaceImages.map((spaceImage, index) => `
 			<article class="gallery-item" data-index="${index}">
-				<img src="${spaceImage.hdurl || spaceImage.url}" alt="${spaceImage.title}" />
+				<img src="${spaceImage.hdurl}" alt="${spaceImage.title}" />
 				<h2>${spaceImage.title}</h2>
 				<p>${spaceImage.date}</p>
 				<p>${spaceImage.explanation}</p>
@@ -77,7 +78,7 @@ gallery.addEventListener('click', (event) => {
 	}
 
 	const spaceImage = spaceImages[galleryItem.dataset.index];
-	modalImage.src = spaceImage.hdurl || spaceImage.url;
+	modalImage.src = spaceImage.hdurl;
 	modalImage.alt = spaceImage.title;
 	modalTitle.textContent = spaceImage.title;
 	modalDate.textContent = spaceImage.date;
