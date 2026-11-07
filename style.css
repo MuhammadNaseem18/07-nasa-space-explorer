@@ -5,10 +5,19 @@
   padding: 0;
 }
 
+:root {
+  --nasa-blue: #0b3d91;
+  --nasa-red: #fc3d21;
+  --space-black: #101820;
+  --light-gray: #f4f6f8;
+  --border-gray: #c9d1d9;
+}
+
 /* Base page styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--space-black);
+  background-color: var(--light-gray);
   padding: 20px;
 }
 
@@ -23,15 +32,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
   margin-bottom: 20px;
+  border-bottom: 5px solid var(--nasa-red);
+  background-color: var(--nasa-blue);
 }
 
 h1 {
-  font-family: Verdana, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
-  color: #212121;
+  color: white;
 }
 
 /* Logo */
@@ -53,25 +63,32 @@ h1 {
 /* Inputs and buttons */
 input[type="date"],
 button {
-  font-family: Arial, sans-serif;
+  font-family: inherit;
   font-weight: normal;
-  color: #666;
+  color: var(--space-black);
   padding: 10px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-gray);
   border-radius: 4px;
   font-size: 16px;
   line-height: 1.4;
   width: 100%;
 }
 
+input[type="date"]:focus,
+button:focus {
+  outline: 3px solid rgba(252, 61, 33, 0.35);
+  outline-offset: 2px;
+}
+
 /* Button specific */
 button {
-  background-color: #d3d3d3;
-  color: black;
+  border-color: var(--nasa-blue);
+  background-color: var(--nasa-blue);
+  color: white;
   cursor: pointer;
 }
 button:hover {
-  background-color: #bfbfbf;
+  background-color: #082f70;
 }
 
 /* Stack horizontally on wider screens */
@@ -108,6 +125,13 @@ button:hover {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-item:hover {
+  box-shadow: 0 5px 14px rgba(11, 61, 145, 0.25);
+  transform: translateY(-2px);
 }
 
 /* Three columns on wider screens */
@@ -130,15 +154,84 @@ button:hover {
   font-size: 14px;
 }
 
+.gallery-item p:first-of-type,
+.modal-content p:first-of-type {
+  color: var(--nasa-blue);
+  font-weight: bold;
+}
+
 /* Placeholder content */
 .placeholder {
   flex: 1 1 100%;
   text-align: center;
   padding: 40px;
-  color: #666;
+  color: #52606d;
 }
 
 .placeholder-icon {
   font-size: 48px;
   margin-bottom: 20px;
+}
+
+/* Image details modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.75);
+  overflow: auto;
+}
+
+.modal.is-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  padding: 20px;
+  background-color: white;
+  border-top: 6px solid var(--nasa-red);
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.modal-content img {
+  display: block;
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+}
+
+.modal-content h2 {
+  margin-top: 20px;
+}
+
+.modal-content p {
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: auto;
+  padding: 5px 12px;
+  border: 0;
+  font-size: 28px;
+  line-height: 1;
+  background-color: transparent;
+  color: var(--nasa-blue);
+  cursor: pointer;
+}
+
+.close-modal:hover {
+  background-color: #e8eef8;
 }
